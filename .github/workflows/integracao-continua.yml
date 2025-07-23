@@ -1,6 +1,5 @@
 name: CI Voll Med
 
-
 on:
   push:
     branches: ["main"]
@@ -9,7 +8,6 @@ on:
     
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -22,15 +20,15 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
-        - name: Configura Docker Compose
-          run:  |
-            sudo rm /usr/local/bin/docker-compose
-            curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-            docker-compose --version
+    - name: Configura Docker Compose
+      run:  |
+        sudo rm /usr/local/bin/docker-compose
+        curl -L https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+        docker-compose --version
 
-        - name: Roda Docker Compose
-          run: docker-compose up -d
+    - name: Roda Docker Compose
+      run: docker-compose up -d
 
-        - name: Executa Testes unitarios
-          run: mvn -B Verify
+    - name: Executa Testes unitarios
+      run: mvn -B verify
